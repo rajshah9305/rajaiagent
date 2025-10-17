@@ -6,8 +6,7 @@ import {
   ClockIcon, 
   CheckCircleIcon, 
   XCircleIcon,
-  PlayIcon,
-  TrendingUpIcon
+  PlayIcon
 } from '@heroicons/react/24/outline'
 
 interface ExecutionMetricsProps {
@@ -79,7 +78,7 @@ export function ExecutionMetrics({ execution }: ExecutionMetricsProps) {
     {
       label: 'Throughput',
       value: `${metrics.throughput.toFixed(1)} tasks/min`,
-      icon: TrendingUpIcon,
+      icon: ChartBarIcon,
       color: 'text-purple-600 dark:text-purple-400',
       bg: 'bg-purple-100 dark:bg-purple-900/30'
     }

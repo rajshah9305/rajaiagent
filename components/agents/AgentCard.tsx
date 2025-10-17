@@ -40,7 +40,7 @@ export function AgentCard({ agent, onUpdate }: AgentCardProps) {
   }
 
   const getStatusConfig = (status: string) => {
-    const statusMap = {
+    const statusMap: Record<string, { badge: string; icon: string; text: string }> = {
       'PREPARED': {
         badge: 'status-success',
         icon: 'icon-emerald',
