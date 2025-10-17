@@ -15,7 +15,7 @@ interface TaskCardProps {
 
 export function TaskCard({ task }: TaskCardProps) {
   const getStatusConfig = (status: string) => {
-    const statusMap = {
+    const statusMap: Record<string, { icon: any; badge: string; iconBg: string; bg: string; progressBg: string }> = {
       'COMPLETE': {
         icon: CheckCircleIcon,
         badge: 'status-success',

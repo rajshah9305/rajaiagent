@@ -27,7 +27,7 @@ export function RecentExecutions() {
   }
 
   const getStatusConfig = (status: string) => {
-    const statusMap = {
+    const statusMap: Record<string, { badge: string; icon: string; bg: string }> = {
       'COMPLETE': {
         badge: 'status-success',
         icon: 'icon-emerald',
