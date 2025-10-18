@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Settings, Key, Database, Shield, Bell, User, Globe, CreditCard, Save, ChevronRight, Check, AlertCircle, Lock, Server, Zap } from 'lucide-react'
+import { Settings, Key, Database, Shield, Bell, User, CreditCard, Save, ChevronRight, Check, AlertCircle, Lock, Server } from 'lucide-react'
 
 const SettingsPage = () => {
   const [activeTab, setActiveTab] = useState('aws')

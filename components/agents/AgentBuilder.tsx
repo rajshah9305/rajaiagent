@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Bot, Cpu, Database, Globe, Layers, Save, Eye, Code, Zap, Terminal, FileText, AlertCircle, CheckCircle, ChevronRight, Sparkles, Brain, Wand2, Settings2 } from 'lucide-react'
+import { Bot, Database, Globe, Save, Eye, Code, Zap, ChevronRight, Sparkles, Wand2, Settings2 } from 'lucide-react'
 
 const AgentBuilder = () => {
   const [agentName, setAgentName] = useState('')
