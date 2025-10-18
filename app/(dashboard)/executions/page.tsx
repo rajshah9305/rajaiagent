@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { 
@@ -83,16 +83,7 @@ export default function EnhancedExecutionsPage() {
   })
   const [autoRefresh, setAutoRefresh] = useState(true)
 
-  useEffect(() => {
-    fetchExecutions()
-    
-    if (autoRefresh) {
-      const interval = setInterval(fetchExecutions, 5000) // Refresh every 5 seconds
-      return () => clearInterval(interval)
-    }
-  }, [autoRefresh])
-
-  const fetchExecutions = async () => {
+  const fetchExecutions = useCallback(async () => {
     try {
       const response = await fetch('/api/executions')
       const data = await response.json()
@@ -104,7 +95,16 @@ export default function EnhancedExecutionsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    fetchExecutions()
+    
+    if (autoRefresh) {
+      const interval = setInterval(fetchExecutions, 5000) // Refresh every 5 seconds
+      return () => clearInterval(interval)
+    }
+  }, [autoRefresh, fetchExecutions])
 
   const calculateStats = (executionList: Execution[]) => {
     const stats = executionList.reduce((acc, execution) => {

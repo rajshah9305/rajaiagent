@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Execution } from '@/types'
 import { PlayIcon, StopIcon } from '@heroicons/react/24/outline'
 
@@ -12,16 +12,7 @@ export function LiveOutput({ execution }: LiveOutputProps) {
   const [output, setOutput] = useState(execution.output || '')
   const [isStreaming, setIsStreaming] = useState(execution.status === 'RUNNING')
 
-  useEffect(() => {
-    if (execution.status === 'RUNNING' && !isStreaming) {
-      setIsStreaming(true)
-      startStreaming()
-    } else if (execution.status !== 'RUNNING' && isStreaming) {
-      setIsStreaming(false)
-    }
-  }, [execution.status])
-
-  const startStreaming = async () => {
+  const startStreaming = useCallback(async () => {
     try {
       const response = await fetch(`/api/executions/${execution.id}/stream`)
       const reader = response.body?.getReader()
@@ -57,7 +48,16 @@ export function LiveOutput({ execution }: LiveOutputProps) {
       console.error('Error streaming execution:', error)
       setIsStreaming(false)
     }
-  }
+  }, [execution.id])
+
+  useEffect(() => {
+    if (execution.status === 'RUNNING' && !isStreaming) {
+      setIsStreaming(true)
+      startStreaming()
+    } else if (execution.status !== 'RUNNING' && isStreaming) {
+      setIsStreaming(false)
+    }
+  }, [execution.status, isStreaming, startStreaming])
 
   const stopStreaming = () => {
     setIsStreaming(false)

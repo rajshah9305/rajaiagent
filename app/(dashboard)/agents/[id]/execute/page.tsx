@@ -47,7 +47,7 @@ export default function ExecuteAgentPage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Agent not found</h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
-            The agent you're looking for doesn't exist.
+            The agent you&apos;re looking for doesn&apos;t exist.
           </p>
           <Link
             href="/agents"

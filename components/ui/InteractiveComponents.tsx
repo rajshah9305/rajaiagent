@@ -80,7 +80,6 @@ import {
   Calendar as CalendarIcon,
   Clock as ClockIcon,
   Timer as TimerIcon,
-  Stopwatch,
   Hourglass,
   CalendarDays,
   CalendarCheck,
@@ -90,11 +89,9 @@ import {
   CalendarRange,
   CalendarSearch,
   CalendarHeart,
-  CalendarStar,
   Calendar as CalendarAlt,
   Clock as ClockAlt,
   Timer as TimerAlt,
-  Stopwatch as StopwatchAlt,
   Hourglass as HourglassAlt
 } from 'lucide-react'
 
