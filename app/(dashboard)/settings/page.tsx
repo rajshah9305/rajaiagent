@@ -1,5 +1,7 @@
-import SettingsPage from '@/components/settings/SettingsPage'
+'use client';
+
+import { SettingsPage } from '@/components/settings/SettingsPage'
 
 export default function Settings() {
-  return <SettingsPage />
+  return <SettingsPage addNotification={() => {}} />
 }

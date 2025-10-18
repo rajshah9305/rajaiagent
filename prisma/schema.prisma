@@ -29,6 +29,7 @@ model Agent {
 
   // Relations
   executions        Execution[]
+  agentTools        AgentTool[]
 
   @@map("agents")
 }
@@ -50,6 +51,7 @@ model Execution {
   agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
   tasks       Task[]
   metrics     ExecutionMetrics?
+  toolExecutions ToolExecution[]
 
   @@map("executions")
 }
@@ -70,6 +72,7 @@ model Task {
 
   // Relations
   execution   Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  toolExecutions ToolExecution[]
 
   @@map("tasks")
 }
@@ -92,4 +95,104 @@ model ExecutionMetrics {
   execution             Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
 
   @@map("execution_metrics")
+}
+
+model Tool {
+  id            String   @id @default(cuid())
+  name          String   @unique
+  displayName   String
+  description   String
+  category      String   // "data", "communication", "automation", "analysis", "integration"
+  icon          String?  // Icon name or URL
+  isActive      Boolean  @default(true)
+  config        String?  // JSON configuration
+  version       String   @default("1.0.0")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  agentTools    AgentTool[]
+  toolExecutions ToolExecution[]
+
+  @@map("tools")
+}
+
+model AgentTool {
+  id          String   @id @default(cuid())
+  agentId     String
+  toolId      String
+  isEnabled   Boolean  @default(true)
+  config      String?  // Tool-specific configuration for this agent
+  priority    Int      @default(0) // Higher number = higher priority
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  tool        Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+
+  @@unique([agentId, toolId])
+  @@map("agent_tools")
+}
+
+model ToolExecution {
+  id            String   @id @default(cuid())
+  toolId        String
+  executionId   String
+  taskId        String?
+  input         String   // JSON input parameters
+  output        String?  // JSON output result
+  status        String   // PENDING, RUNNING, COMPLETE, ERROR
+  startTime     DateTime @default(now())
+  endTime       DateTime?
+  duration      Int?     // in milliseconds
+  error         String?
+  metadata      String?  // Additional metadata as JSON
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  tool          Tool     @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  execution     Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+  task          Task?    @relation(fields: [taskId], references: [id], onDelete: SetNull)
+
+  @@map("tool_executions")
+}
+
+model User {
+  id                String   @id @default(cuid())
+  email             String   @unique
+  name              String
+  avatar            String?
+  role              String   @default("user") // "admin", "user", "viewer"
+  isActive          Boolean  @default(true)
+  lastLoginAt       DateTime?
+  preferences       String?  // JSON user preferences
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  userAnalytics     UserAnalytics[]
+
+  @@map("users")
+}
+
+model UserAnalytics {
+  id                String   @id @default(cuid())
+  userId            String
+  date              DateTime
+  totalExecutions   Int      @default(0)
+  successfulExecutions Int   @default(0)
+  failedExecutions  Int      @default(0)
+  totalDuration     Int      @default(0) // in milliseconds
+  totalCost         Float    @default(0)
+  toolsUsed         String   @default("[]") // JSON array of tool IDs
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@map("user_analytics")
 }

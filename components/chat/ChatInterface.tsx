@@ -333,7 +333,7 @@ export function ChatInterface({ agent }: ChatInterfaceProps) {
                       <button type="button" className="p-1.5 hover:bg-gray-100 rounded transition-colors">
                         <Paperclip className="w-4 h-4 text-gray-500" />
                       </button>
-                      <button type="button" className="p-1.5 hover:bg-gray-100 rounded transition-colors">
+                      <button type="button" className="p-1.5 hover:bg-gray-100 rounded transition-colors" aria-label="Upload image">
                         <Image className="w-4 h-4 text-gray-500" />
                       </button>
                       <button type="button" className="p-1.5 hover:bg-gray-100 rounded transition-colors">

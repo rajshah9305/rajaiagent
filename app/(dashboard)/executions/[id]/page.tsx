@@ -38,7 +38,7 @@ export default function ExecutionDetailPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <LoadingSpinner size="large" />
+        <LoadingSpinner size="lg" />
       </div>
     )
   }
