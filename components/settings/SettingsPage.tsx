@@ -22,24 +22,29 @@ const SettingsPage = () => {
   ]
 
   return (
-    <div className="space-y-8">
-      {/* Page Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-          <p className="text-gray-600 mt-1">Manage your application configuration</p>
+    <div className="space-y-8 p-6">
+        {/* Page Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/90 rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
+              <Settings className="w-6 h-6 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">Settings</h1>
+              <p className="text-muted-foreground mt-1">Manage your application configuration</p>
+            </div>
+          </div>
+          <button className="px-6 py-2.5 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground font-semibold rounded-lg hover:from-primary/95 hover:to-primary transition-all flex items-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-xl hover:scale-105">
+            <Save className="w-4 h-4" />
+            <span>Save Changes</span>
+          </button>
         </div>
-        <button className="px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all flex items-center space-x-ger shadow-lg shadow-emerald-500/30">
-          <Save className="w-4 h-4" />
-          <span>Save Changes</span>
-        </button>
-      </div>
 
       <div className="space-y-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-xl p-4 border-2 border-black sticky top-24">
+            <div className="glass-card p-4 sticky top-24">
               {tabs.map((tab) => {
                 const Icon = tab.icon
                 return (
@@ -48,8 +53,8 @@ const SettingsPage = () => {
                     onClick={() => setActiveTab(tab.id)}
                     className={`w-full px-4 py-3 rounded-lg font-semibold text-left flex items-center justify-between group transition-all mb-2 ${
                       activeTab === tab.id
-                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-500/30'
-                        : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                        ? 'bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/30'
+                        : 'text-muted-foreground hover:bg-secondary/50 hover:text-foreground'
                     }`}
                   >
                     <div className="flex items-center space-x-3">

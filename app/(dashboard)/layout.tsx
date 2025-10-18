@@ -126,21 +126,21 @@ export default function DashboardLayout({
       <motion.aside
         initial={false}
         animate={{ width: sidebarOpen ? 280 : 80 }}
-        className="fixed left-0 top-0 h-screen bg-gradient-to-br from-white via-white to-gray-50 border-r-2 border-black z-40 transition-all duration-300 mobile-safe-area shadow-2xl"
+        className="fixed left-0 top-0 h-screen bg-sidebar border-r border-sidebar-border z-40 transition-all duration-300 mobile-safe-area shadow-2xl"
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="h-16 flex items-center justify-between px-6 border-b-2 border-black">
-            <motion.div 
+          <div className="h-16 flex items-center justify-between px-6 border-b border-sidebar-border">
+            <motion.div
               className="flex items-center gap-3"
               animate={{ opacity: sidebarOpen ? 1 : 0 }}
             >
-              <motion.div 
-                className="w-11 h-11 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/30"
+              <motion.div
+                className="w-11 h-11 rounded-lg bg-gradient-to-br from-primary to-primary/90 flex items-center justify-center shadow-lg shadow-primary/30"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Bot className="w-6 h-6 text-white" />
+                <Bot className="w-6 h-6 text-primary-foreground" />
               </motion.div>
               {sidebarOpen && (
                 <motion.div
@@ -149,18 +149,18 @@ export default function DashboardLayout({
                   exit={{ opacity: 0, x: -10 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <h1 className="text-xl font-bold text-black tracking-tight">RAJ AI</h1>
-                  <p className="text-xs text-gray-600 font-medium">Agent Builder</p>
+                  <h1 className="text-xl font-bold text-sidebar-foreground tracking-tight">RAJ AI</h1>
+                  <p className="text-xs text-sidebar-foreground/60 font-medium">Agent Builder</p>
                 </motion.div>
               )}
             </motion.div>
             <motion.button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200"
+              className="p-2 rounded-lg hover:bg-sidebar-accent transition-colors border border-transparent hover:border-sidebar-border"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              {sidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              {sidebarOpen ? <X className="w-4 h-4 text-sidebar-foreground" /> : <Menu className="w-4 h-4 text-sidebar-foreground" />}
             </motion.button>
           </div>
 
@@ -183,31 +183,31 @@ export default function DashboardLayout({
                     href={item.path}
                     className={`
                       w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 relative overflow-hidden border-2
-                      ${isActive 
-                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-500/30 border-emerald-500' 
-                        : 'text-black hover:bg-gray-100 border-transparent hover:border-gray-200'
+                      ${isActive
+                        ? 'bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/30 border-primary'
+                        : 'text-sidebar-foreground hover:bg-sidebar-accent border-transparent hover:border-sidebar-border'
                       }
                     `}
                   >
                     {/* Active indicator */}
                     {isActive && (
                       <motion.div
-                        className="absolute left-0 top-0 bottom-0 w-1 bg-white rounded-r-full"
+                        className="absolute left-0 top-0 bottom-0 w-1 bg-primary-foreground rounded-r-full"
                         layoutId="activeIndicator"
                         transition={{ duration: 0.2 }}
                       />
                     )}
-                    
+
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 5 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <Icon className={`w-5 h-5 ${sidebarOpen ? '' : 'mx-auto'}`} />
+                      <Icon className={`w-5 h-5 ${sidebarOpen ? '' : 'mx-auto'} ${isActive ? 'text-primary-foreground' : 'text-sidebar-foreground'}`} />
                     </motion.div>
-                    
+
                     {sidebarOpen && (
-                      <motion.span 
-                        className="font-medium"
+                      <motion.span
+                        className={`font-medium ${isActive ? 'text-primary-foreground' : 'text-sidebar-foreground'}`}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.1 }}
@@ -232,28 +232,28 @@ export default function DashboardLayout({
           </nav>
 
           {/* User Profile */}
-          <div className="p-3 border-t-2 border-black">
+          <div className="p-3 border-t border-sidebar-border">
             <motion.div
-              className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent hover:border-gray-200"
+              className="flex items-center gap-3 p-3 rounded-xl hover:bg-sidebar-accent cursor-pointer transition-colors border-2 border-transparent hover:border-sidebar-border"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <motion.div 
-                className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-semibold text-sm shadow-lg shadow-amber-500/30"
+              <motion.div
+                className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/90 flex items-center justify-center text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/30"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ duration: 0.2 }}
               >
                 RS
               </motion.div>
               {sidebarOpen && (
-                <motion.div 
+                <motion.div
                   className="flex-1 min-w-0"
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <p className="text-sm font-medium truncate text-black">Raj Shah</p>
-                  <p className="text-xs text-gray-600 truncate">raj@example.com</p>
+                  <p className="text-sm font-medium truncate text-sidebar-foreground">Raj Shah</p>
+                  <p className="text-xs text-sidebar-foreground/60 truncate">raj@example.com</p>
                 </motion.div>
               )}
             </motion.div>
@@ -267,11 +267,11 @@ export default function DashboardLayout({
         style={{ marginLeft: sidebarOpen ? 280 : 80 }}
       >
         {/* Top Bar */}
-        <header className="h-16 bg-white/90 backdrop-blur-xl border-b-2 border-black sticky top-0 z-30 shadow-lg">
+        <header className="h-16 bg-card/90 backdrop-blur-xl border-b border-border sticky top-0 z-30 shadow-lg">
           <div className="h-full px-6 flex items-center justify-between">
             {/* Enhanced Search */}
             <div className="flex-1 max-w-md">
-              <QuickSearch 
+              <QuickSearch
                 onSearch={handleSearch}
                 placeholder="Search agents, executions..."
               />
@@ -282,14 +282,14 @@ export default function DashboardLayout({
               {/* Theme Toggle */}
               <motion.button
                 onClick={toggleTheme}
-                className="p-2.5 rounded-xl hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200"
+                className="p-2.5 rounded-xl hover:bg-secondary transition-colors border border-transparent hover:border-border"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {theme === 'light' ? (
-                  <Moon className="w-5 h-5 text-gray-700" />
+                  <Moon className="w-5 h-5 text-muted-foreground hover:text-foreground" />
                 ) : (
-                  <Sun className="w-5 h-5 text-gray-700" />
+                  <Sun className="w-5 h-5 text-muted-foreground hover:text-foreground" />
                 )}
               </motion.button>
 
@@ -302,11 +302,11 @@ export default function DashboardLayout({
 
               {/* User Menu */}
               <motion.button
-                className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200"
+                className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-secondary transition-colors border border-transparent hover:border-border"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-semibold text-sm shadow-lg shadow-amber-500/30">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-primary/90 flex items-center justify-center text-primary-foreground font-semibold text-sm shadow-lg shadow-primary/30">
                   RS
                 </div>
               </motion.button>

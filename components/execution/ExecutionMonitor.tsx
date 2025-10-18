@@ -57,11 +57,11 @@ const ExecutionMonitor = () => {
 
   const getStatusStyles = (status: string) => {
     switch(status) {
-      case 'running': return 'bg-emerald-100 text-emerald-700 border-emerald-300'
-      case 'completed': return 'bg-green-100 text-green-700 border-green-300'
-      case 'failed': return 'bg-red-100 text-red-700 border-red-300'
-      case 'queued': return 'bg-gray-100 text-gray-700 border-gray-300'
-      default: return 'bg-gray-100 text-gray-700 border-gray-300'
+      case 'running': return 'status-running'
+      case 'completed': return 'status-success'
+      case 'failed': return 'status-error'
+      case 'queued': return 'status-info'
+      default: return 'status-info'
     }
   }
 
@@ -80,31 +80,36 @@ const ExecutionMonitor = () => {
   )
 
   return (
-    <div className="space-y-8">
-      {/* Page Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Execution Monitor</h1>
-          <p className="text-gray-600 mt-1">Real-time task tracking and monitoring</p>
+    <div className="space-y-8 p-6">
+        {/* Page Header */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/90 rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
+              <Activity className="w-6 h-6 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-3xl font-bold text-foreground">Execution Monitor</h1>
+              <p className="text-muted-foreground mt-1">Real-time task tracking and monitoring</p>
+            </div>
+          </div>
+          <div className="flex items-center space-x-3">
+            <button className="p-2.5 hover:bg-secondary rounded-lg transition-colors border border-transparent hover:border-border">
+              <RefreshCw className="w-5 h-5 text-muted-foreground hover:text-foreground" />
+            </button>
+            <button className="px-5 py-2.5 bg-card text-foreground font-semibold rounded-lg hover:bg-secondary transition-all flex items-center space-x-2 border-2 border-border hover:border-primary/50">
+              <Download className="w-4 h-4" />
+              <span>Export Logs</span>
+            </button>
+          </div>
         </div>
-        <div className="flex items-center space-x-3">
-          <button className="p-2.5 hover:bg-gray-100 rounded-lg transition-colors border border-transparent hover:border-gray-200">
-            <RefreshCw className="w-5 h-5 text-gray-700" />
-          </button>
-          <button className="px-5 py-2.5 bg-white text-gray-900 font-semibold rounded-lg hover:bg-gray-50 transition-all flex items-center space-x-2 border-2 border-gray-800">
-            <Download className="w-4 h-4" />
-            <span>Export Logs</span>
-          </button>
-        </div>
-      </div>
 
       <div className="space-y-8">
         {/* Filter Bar */}
-        <div className="bg-white/90 backdrop-blur-xl border-2 border-black rounded-xl p-4 mb-6 shadow-lg">
+        <div className="glass-card p-4 mb-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <Filter className="w-5 h-5 text-gray-600" />
-              <span className="font-semibold text-gray-700">Filter by Status:</span>
+              <Filter className="w-5 h-5 text-muted-foreground" />
+              <span className="font-semibold text-foreground">Filter by Status:</span>
               <div className="flex space-x-2">
                 {['all', 'running', 'completed', 'failed', 'queued'].map((status) => (
                   <button
@@ -112,8 +117,8 @@ const ExecutionMonitor = () => {
                     onClick={() => setFilterStatus(status)}
                     className={`px-4 py-1.5 rounded-lg font-semibold text-sm transition-all ${
                       filterStatus === status
-                        ? 'bg-gradient-to-r from-cyan-600 to-sky-600 text-white shadow-lg shadow-cyan-500/30'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                        ? 'bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/30'
+                        : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
                     }`}
                   >
                     {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -122,8 +127,8 @@ const ExecutionMonitor = () => {
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <span className="text-sm text-gray-600">
-                <span className="font-bold text-black">{executions.length}</span> total executions
+              <span className="text-sm text-muted-foreground">
+                <span className="font-bold text-foreground">{executions.length}</span> total executions
               </span>
             </div>
           </div>
@@ -136,23 +141,26 @@ const ExecutionMonitor = () => {
               <div
                 key={execution.id}
                 onClick={() => setSelectedExecution(execution)}
-                className={`bg-gradient-to-br from-cyan-50 via-sky-50 to-teal-50 border-2 border-black rounded-xl p-5 hover:shadow-2xl transition-all cursor-pointer ${
-                  selectedExecution?.id === execution.id ? 'ring-4 ring-cyan-500/30' : ''
+                className={`glass-card p-5 hover:shadow-2xl transition-all cursor-pointer relative overflow-hidden ${
+                  selectedExecution?.id === execution.id ? 'ring-4 ring-primary/30' : ''
                 }`}
               >
-                <div className="flex items-start justify-between mb-3">
+                {/* Header gradient overlay */}
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+                <div className="relative z-10 flex items-start justify-between mb-3">
                   <div>
                     <div className="flex items-center space-x-2 mb-1">
-                      <h3 className="font-bold text-black text-lg">{execution.agent}</h3>
-                      <span className={`px-2.5 py-1 text-xs font-bold rounded-md border ${getStatusStyles(execution.status)} flex items-center space-x-1`}>
+                      <h3 className="font-bold text-foreground text-lg">{execution.agent}</h3>
+                      <span className={`status-badge ${getStatusStyles(execution.status)} flex items-center space-x-1`}>
                         {getStatusIcon(execution.status)}
                         <span>{execution.status}</span>
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600 font-medium">{execution.task}</p>
+                    <p className="text-sm text-muted-foreground font-medium">{execution.task}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs text-gray-500 font-semibold">ID: {execution.id}</p>
+                    <p className="text-xs text-muted-foreground font-semibold">ID: {execution.id}</p>
                   </div>
                 </div>
 

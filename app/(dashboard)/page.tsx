@@ -62,14 +62,25 @@ export default function DashboardPage() {
   }, [])
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6">
+      {/* Page Background with Glass Effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-muted/50 pointer-events-none" />
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-primary/5 to-primary/3 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-accent/5 to-accent/3 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
+      </div>
+
+      <div className="relative z-10">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => {
             const Icon = stat.icon
             return (
-              <div key={index} className="metric-card relative overflow-hidden">
-                <div className="flex items-center justify-between mb-4">
+              <div key={index} className="metric-card-vibrant relative overflow-hidden group">
+                {/* Animated gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className="relative z-10 flex items-center justify-between mb-4">
                   <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
                     stat.trend === 'up' ? 'icon-success' : 'icon-error'
                   }`}>
@@ -83,10 +94,14 @@ export default function DashboardPage() {
                     {stat.change}
                   </div>
                 </div>
-                <div>
+                <div className="relative z-10">
                   <p className="text-2xl font-bold text-foreground mb-1">{stat.value}</p>
                   <p className="text-sm text-muted-foreground font-medium">{stat.label}</p>
                 </div>
+
+                {/* Decorative elements */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-2xl" />
+                <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-accent/10 to-transparent rounded-full blur-xl" />
               </div>
             )
           })}
@@ -94,20 +109,29 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Agents List */}
-          <div className="glass-card">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-foreground">Active Agents</h2>
-              <button className="px-4 py-2 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground font-semibold rounded-lg hover:from-primary/95 hover:to-primary transition-all flex items-center space-x-2 shadow-lg shadow-primary/30">
+          <div className="glass-card relative overflow-hidden">
+            {/* Header gradient overlay */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+            <div className="relative z-10 flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/90 rounded-xl flex items-center justify-center shadow-lg shadow-primary/30">
+                  <Bot className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <h2 className="text-xl font-bold text-foreground">Active Agents</h2>
+              </div>
+              <button className="px-4 py-2 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground font-semibold rounded-lg hover:from-primary/95 hover:to-primary transition-all flex items-center space-x-2 shadow-lg shadow-primary/30 hover:shadow-xl hover:scale-105">
                 <Plus className="w-4 h-4" />
                 <span>New Agent</span>
               </button>
             </div>
-            <div className="space-y-4">
+
+            <div className="relative z-10 space-y-4">
               {agents.map((agent) => (
-                <div key={agent.id} className="bg-card border border-border rounded-lg p-4 hover:border-primary/50 hover:shadow-lg transition-all">
+                <div key={agent.id} className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-lg p-4 hover:border-primary/30 hover:shadow-lg transition-all duration-300 hover:bg-card/80">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-3">
-                      <div className={`w-3 h-3 rounded-full ${getStatusDot(agent.status)}`}></div>
+                      <div className={`w-3 h-3 rounded-full ${getStatusDot(agent.status)}`} />
                       <h3 className="font-bold text-foreground">{agent.name}</h3>
                     </div>
                     <span className={`status-badge ${getStatusColor(agent.status)}`}>
@@ -124,19 +148,31 @@ export default function DashboardPage() {
                 </div>
               ))}
             </div>
+
+            {/* Bottom decoration */}
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
           </div>
 
           {/* Recent Executions */}
-          <div className="glass-card">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-foreground">Recent Executions</h2>
-              <button className="p-2 hover:bg-secondary rounded-lg transition-colors">
-                <RefreshCw className="w-5 h-5 text-foreground" />
+          <div className="glass-card relative overflow-hidden">
+            {/* Header gradient overlay */}
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
+            <div className="relative z-10 flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-accent to-accent/90 rounded-xl flex items-center justify-center shadow-lg shadow-accent/30">
+                  <Activity className="w-5 h-5 text-accent-foreground" />
+                </div>
+                <h2 className="text-xl font-bold text-foreground">Recent Executions</h2>
+              </div>
+              <button className="p-2 hover:bg-secondary/50 rounded-lg transition-colors hover:scale-110">
+                <RefreshCw className="w-5 h-5 text-muted-foreground hover:text-foreground" />
               </button>
             </div>
-            <div className="space-y-4">
+
+            <div className="relative z-10 space-y-4">
               {recentExecutions.map((execution) => (
-                <div key={execution.id} className="execution-card">
+                <div key={execution.id} className="execution-card hover:border-primary/30">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-bold text-foreground">{execution.agent}</h3>
                     <span className={`status-badge ${getStatusColor(execution.status)}`}>
@@ -151,8 +187,12 @@ export default function DashboardPage() {
                 </div>
               ))}
             </div>
+
+            {/* Bottom decoration */}
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border to-transparent" />
           </div>
         </div>
       </div>
+    </div>
   )
 }
