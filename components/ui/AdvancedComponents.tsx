@@ -174,9 +174,9 @@ export function StatusIndicator({ status, label, animated = true }: StatusIndica
       text: 'text-emerald-600 dark:text-emerald-400'
     },
     inactive: {
-      color: 'bg-gray-400',
-      pulse: 'bg-gray-300',
-      text: 'text-gray-600 dark:text-gray-400'
+      color: 'bg-muted-foreground',
+      pulse: 'bg-muted-foreground/80',
+      text: 'text-muted-foreground'
     },
     pending: {
       color: 'bg-amber-500',
@@ -184,9 +184,9 @@ export function StatusIndicator({ status, label, animated = true }: StatusIndica
       text: 'text-amber-600 dark:text-amber-400'
     },
     error: {
-      color: 'bg-red-500',
-      pulse: 'bg-red-400',
-      text: 'text-red-600 dark:text-red-400'
+      color: 'bg-destructive',
+      pulse: 'bg-destructive/80',
+      text: 'text-destructive'
     },
     success: {
       color: 'bg-emerald-500',
@@ -265,7 +265,7 @@ export function ProgressRing({
           stroke="currentColor"
           strokeWidth={strokeWidth}
           fill="none"
-          className="text-gray-200 dark:text-gray-700"
+          className="text-muted"
         />
         {/* Progress circle */}
         <motion.circle
@@ -357,7 +357,7 @@ export function FloatingActionButton({
       
       {label && (
         <motion.span
-          className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute -top-12 left-1/2 -translate-x-1/2 bg-popover text-popover-foreground text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity border border-border"
           initial={{ opacity: 0, y: 5 }}
           whileHover={{ opacity: 1, y: 0 }}
         >

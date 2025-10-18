@@ -26,7 +26,7 @@ export function Skeleton({
   return (
     <motion.div
       className={cn(
-        'bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700',
+        'bg-gradient-to-r from-muted via-muted/80 to-muted',
         variants[variant],
         className
       )}
@@ -59,7 +59,7 @@ export function MetricCardSkeleton() {
       </div>
       
       {/* Decorative element */}
-      <div className="absolute top-4 right-4 w-16 h-16 bg-gray-200 dark:bg-gray-700 rounded-full blur-xl opacity-20" />
+      <div className="absolute top-4 right-4 w-16 h-16 bg-muted rounded-full blur-xl opacity-20" />
     </div>
   )
 }

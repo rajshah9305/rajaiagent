@@ -46,12 +46,12 @@ export default function AgentsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">AI Agents</h1>
-          <p className="text-gray-600 mt-1">Manage your AWS Bedrock agents</p>
+          <h1 className="text-3xl font-bold text-foreground">AI Agents</h1>
+          <p className="text-muted-foreground mt-1">Manage your AWS Bedrock agents</p>
         </div>
         <Link
           href="/agents/new"
-          className="px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all flex items-center space-x-2 shadow-lg shadow-emerald-500/30"
+          className="px-6 py-2.5 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground font-semibold rounded-lg hover:from-primary/95 hover:to-primary transition-all flex items-center space-x-2 shadow-lg shadow-primary/30"
         >
           <PlusIcon className="h-5 w-5" />
           <span>Create Agent</span>
@@ -62,12 +62,12 @@ export default function AgentsPage() {
         {/* Search Bar */}
         <div className="mb-8">
           <div className="relative max-w-md">
-            <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white transition-all shadow-sm hover:shadow-md focus:shadow-lg"
+              className="w-full pl-12 pr-4 py-3 border-2 border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary bg-card transition-all shadow-sm hover:shadow-md focus:shadow-lg"
               placeholder="Search agents..."
             />
           </div>

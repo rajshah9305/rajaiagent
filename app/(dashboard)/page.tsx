@@ -38,10 +38,10 @@ export default function DashboardPage() {
 
   const getStatusColor = (status: string) => {
     switch(status) {
-      case 'active': case 'running': case 'completed': return 'text-emerald-700 bg-emerald-50 border border-emerald-200'
-      case 'error': case 'failed': return 'text-red-700 bg-red-50 border border-red-200'
-      case 'idle': return 'text-gray-700 bg-gray-50 border border-gray-200'
-      default: return 'text-gray-700 bg-gray-50 border border-gray-200'
+      case 'active': case 'running': case 'completed': return 'status-success'
+      case 'error': case 'failed': return 'status-error'
+      case 'idle': return 'status-info'
+      default: return 'status-info'
     }
   }
 
@@ -49,8 +49,8 @@ export default function DashboardPage() {
     switch(status) {
       case 'active': case 'running': return 'bg-emerald-500 animate-pulse shadow-lg shadow-emerald-500/50'
       case 'error': case 'failed': return 'bg-red-500 shadow-lg shadow-red-500/50'
-      case 'idle': return 'bg-gray-400'
-      default: return 'bg-gray-400'
+      case 'idle': return 'bg-muted-foreground'
+      default: return 'bg-muted-foreground'
     }
   }
 
@@ -68,10 +68,10 @@ export default function DashboardPage() {
           {stats.map((stat, index) => {
             const Icon = stat.icon
             return (
-              <div key={index} className="bg-gradient-to-br from-white via-white to-gray-50 border-2 border-black rounded-xl p-6 hover:shadow-2xl transition-all hover:scale-105 relative overflow-hidden">
+              <div key={index} className="metric-card relative overflow-hidden">
                 <div className="flex items-center justify-between mb-4">
                   <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                    stat.trend === 'up' ? 'bg-emerald-100' : 'bg-red-100'
+                    stat.trend === 'up' ? 'icon-success' : 'icon-error'
                   }`}>
                     <Icon className={`w-6 h-6 ${
                       stat.trend === 'up' ? 'text-emerald-600' : 'text-red-600'
@@ -84,8 +84,8 @@ export default function DashboardPage() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-black mb-1">{stat.value}</p>
-                  <p className="text-sm text-gray-600 font-medium">{stat.label}</p>
+                  <p className="text-2xl font-bold text-foreground mb-1">{stat.value}</p>
+                  <p className="text-sm text-muted-foreground font-medium">{stat.label}</p>
                 </div>
               </div>
             )
@@ -94,27 +94,27 @@ export default function DashboardPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Agents List */}
-          <div className="bg-gradient-to-br from-white via-white to-gray-50 border-2 border-black rounded-xl p-6 shadow-lg">
+          <div className="glass-card">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-black">Active Agents</h2>
-              <button className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all flex items-center space-x-2 shadow-lg shadow-emerald-500/30">
+              <h2 className="text-xl font-bold text-foreground">Active Agents</h2>
+              <button className="px-4 py-2 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground font-semibold rounded-lg hover:from-primary/95 hover:to-primary transition-all flex items-center space-x-2 shadow-lg shadow-primary/30">
                 <Plus className="w-4 h-4" />
                 <span>New Agent</span>
               </button>
             </div>
             <div className="space-y-4">
               {agents.map((agent) => (
-                <div key={agent.id} className="bg-white border-2 border-gray-200 rounded-lg p-4 hover:border-emerald-300 hover:shadow-lg transition-all">
+                <div key={agent.id} className="bg-card border border-border rounded-lg p-4 hover:border-primary/50 hover:shadow-lg transition-all">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-3">
                       <div className={`w-3 h-3 rounded-full ${getStatusDot(agent.status)}`}></div>
-                      <h3 className="font-bold text-black">{agent.name}</h3>
+                      <h3 className="font-bold text-foreground">{agent.name}</h3>
                     </div>
-                    <span className={`px-2 py-1 text-xs font-bold rounded-md border ${getStatusColor(agent.status)}`}>
+                    <span className={`status-badge ${getStatusColor(agent.status)}`}>
                       {agent.status}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-sm text-gray-600">
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <span className="font-medium">{agent.model}</span>
                     <div className="flex items-center space-x-4">
                       <span>{agent.executions} runs</span>
@@ -127,24 +127,24 @@ export default function DashboardPage() {
           </div>
 
           {/* Recent Executions */}
-          <div className="bg-gradient-to-br from-white via-white to-gray-50 border-2 border-black rounded-xl p-6 shadow-lg">
+          <div className="glass-card">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-black">Recent Executions</h2>
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <RefreshCw className="w-5 h-5 text-gray-700" />
+              <h2 className="text-xl font-bold text-foreground">Recent Executions</h2>
+              <button className="p-2 hover:bg-secondary rounded-lg transition-colors">
+                <RefreshCw className="w-5 h-5 text-foreground" />
               </button>
             </div>
             <div className="space-y-4">
               {recentExecutions.map((execution) => (
-                <div key={execution.id} className="bg-white border-2 border-gray-200 rounded-lg p-4 hover:border-emerald-300 hover:shadow-lg transition-all">
+                <div key={execution.id} className="execution-card">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-bold text-black">{execution.agent}</h3>
-                    <span className={`px-2 py-1 text-xs font-bold rounded-md border ${getStatusColor(execution.status)}`}>
+                    <h3 className="font-bold text-foreground">{execution.agent}</h3>
+                    <span className={`status-badge ${getStatusColor(execution.status)}`}>
                       {execution.status}
                     </span>
                   </div>
-                  <p className="text-sm text-gray-600 mb-2">{execution.task}</p>
-                  <div className="flex items-center justify-between text-xs text-gray-500">
+                  <p className="text-sm text-muted-foreground mb-2">{execution.task}</p>
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <span>{execution.duration}</span>
                     <span>{execution.time}</span>
                   </div>

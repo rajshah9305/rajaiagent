@@ -35,43 +35,43 @@ export function Toast({ id, type, title, message, duration = 5000, onClose }: To
     switch (type) {
       case 'success':
         return {
-          bg: 'bg-gradient-to-r from-emerald-50 to-green-50 dark:from-emerald-900/20 dark:to-green-900/20',
-          border: 'border-emerald-200 dark:border-emerald-700/30',
+          bg: 'bg-card border border-border',
+          border: 'border-border',
           iconBg: 'bg-emerald-100 dark:bg-emerald-900/30',
           iconColor: 'text-emerald-600 dark:text-emerald-400',
-          titleColor: 'text-emerald-800 dark:text-emerald-200',
-          messageColor: 'text-emerald-700 dark:text-emerald-300',
+          titleColor: 'text-foreground',
+          messageColor: 'text-muted-foreground',
           accent: 'border-l-emerald-500'
         }
       case 'error':
         return {
-          bg: 'bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20',
-          border: 'border-red-200 dark:border-red-700/30',
-          iconBg: 'bg-red-100 dark:bg-red-900/30',
-          iconColor: 'text-red-600 dark:text-red-400',
-          titleColor: 'text-red-800 dark:text-red-200',
-          messageColor: 'text-red-700 dark:text-red-300',
-          accent: 'border-l-red-500'
+          bg: 'bg-card border border-destructive',
+          border: 'border-destructive',
+          iconBg: 'bg-destructive/10',
+          iconColor: 'text-destructive',
+          titleColor: 'text-foreground',
+          messageColor: 'text-muted-foreground',
+          accent: 'border-l-destructive'
         }
       case 'warning':
         return {
-          bg: 'bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20',
-          border: 'border-yellow-200 dark:border-yellow-700/30',
-          iconBg: 'bg-yellow-100 dark:bg-yellow-900/30',
-          iconColor: 'text-yellow-600 dark:text-yellow-400',
-          titleColor: 'text-yellow-800 dark:text-yellow-200',
-          messageColor: 'text-yellow-700 dark:text-yellow-300',
-          accent: 'border-l-yellow-500'
+          bg: 'bg-card border border-amber-500',
+          border: 'border-amber-500',
+          iconBg: 'bg-amber-100 dark:bg-amber-900/30',
+          iconColor: 'text-amber-600 dark:text-amber-400',
+          titleColor: 'text-foreground',
+          messageColor: 'text-muted-foreground',
+          accent: 'border-l-amber-500'
         }
       case 'info':
         return {
-          bg: 'bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20',
-          border: 'border-blue-200 dark:border-blue-700/30',
-          iconBg: 'bg-blue-100 dark:bg-blue-900/30',
-          iconColor: 'text-blue-600 dark:text-blue-400',
-          titleColor: 'text-blue-800 dark:text-blue-200',
-          messageColor: 'text-blue-700 dark:text-blue-300',
-          accent: 'border-l-blue-500'
+          bg: 'bg-card border border-primary',
+          border: 'border-primary',
+          iconBg: 'bg-primary/10',
+          iconColor: 'text-primary',
+          titleColor: 'text-foreground',
+          messageColor: 'text-muted-foreground',
+          accent: 'border-l-primary'
         }
     }
   }
@@ -102,9 +102,9 @@ export function Toast({ id, type, title, message, duration = 5000, onClose }: To
                 setIsVisible(false)
                 setTimeout(() => onClose(id), 300)
               }}
-              className="ml-4 flex-shrink-0 p-1 rounded-lg hover:bg-white/50 dark:hover:bg-gray-800/50 transition-colors duration-200"
+              className="ml-4 flex-shrink-0 p-1 rounded-lg hover:bg-secondary transition-colors duration-200"
             >
-              <XMarkIcon className="h-4 w-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" />
+              <XMarkIcon className="h-4 w-4 text-muted-foreground hover:text-foreground" />
             </button>
           </div>
         </div>
