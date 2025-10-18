@@ -606,12 +606,7 @@ export default function EnhancedExecutionsPage() {
                                 <span>{formatDuration(execution.duration)}</span>
                               </div>
                             )}
-                            {execution.agentName && (
-                              <div className="flex items-center gap-1">
-                                <Bot className="w-4 h-4" />
-                                <span>{execution.agentName}</span>
-                              </div>
-                            )}
+                            {/* Agent name removed - not available in Execution type */}
                           </div>
                         </div>
                       </div>
