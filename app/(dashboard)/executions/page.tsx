@@ -35,7 +35,7 @@ import {
 } from 'lucide-react'
 import { AdvancedCard } from '@/components/ui/AdvancedComponents'
 import { StatusIndicator, ProgressRing } from '@/components/ui/AdvancedComponents'
-import { ChartContainer, AnimatedAreaChart, AnimatedBarChart, RealTimeChart } from '@/components/ui/DataVisualization'
+// Chart components temporarily removed
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { EmptyState } from '@/components/ui/EmptyState'
 import type { Execution } from '@/types'
@@ -453,14 +453,15 @@ export default function EnhancedExecutionsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <ChartContainer title="Execution Trends" subtitle="Hourly execution volume">
-            <AnimatedBarChart 
-              data={metrics.hourly} 
-              dataKey="executions" 
-              color="hsl(262 83% 58%)"
-              height={250}
-            />
-          </ChartContainer>
+          <AdvancedCard variant="glass">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold mb-2">Execution Trends</h3>
+              <p className="text-sm text-muted-foreground mb-4">Hourly execution volume</p>
+              <div className="h-64 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                <p className="text-muted-foreground">Chart component temporarily unavailable</p>
+              </div>
+            </div>
+          </AdvancedCard>
         </motion.div>
 
         <motion.div
@@ -468,14 +469,15 @@ export default function EnhancedExecutionsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
         >
-          <ChartContainer title="Real-time Activity" subtitle="Live execution monitoring">
-            <RealTimeChart 
-              data={metrics.realtime} 
-              dataKey="active" 
-              color="hsl(140 100% 50%)"
-              height={250}
-            />
-          </ChartContainer>
+          <AdvancedCard variant="glass">
+            <div className="p-6">
+              <h3 className="text-lg font-semibold mb-2">Real-time Activity</h3>
+              <p className="text-sm text-muted-foreground mb-4">Live execution monitoring</p>
+              <div className="h-64 bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
+                <p className="text-muted-foreground">Chart component temporarily unavailable</p>
+              </div>
+            </div>
+          </AdvancedCard>
         </motion.div>
       </div>
 
