@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { EyeIcon, PlayIcon } from '@heroicons/react/24/outline'
 import { formatDate, formatDuration } from '@/lib/utils'
 import type { Execution } from '@/types'
@@ -112,19 +113,32 @@ export function RecentExecutions() {
           </div>
         ) : (
           <div className="space-y-4">
-            {executions.map((execution) => {
+            {executions.map((execution, index) => {
               const statusConfig = getStatusConfig(execution.status)
               return (
-                <div key={execution.id} className={`execution-card bg-gradient-to-r ${statusConfig.bg} group`}>
+                <motion.div 
+                  key={execution.id} 
+                  className={`execution-card bg-gradient-to-r ${statusConfig.bg} group`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  whileHover={{ scale: 1.01, x: 4 }}
+                >
                   <div className="flex items-center justify-between">
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-gray-900 dark:text-white truncate mb-2">
+                      <motion.p 
+                        className="text-sm font-semibold text-gray-900 dark:text-white truncate mb-2"
+                        whileHover={{ scale: 1.02 }}
+                      >
                         {execution.input}
-                      </p>
+                      </motion.p>
                       <div className="flex items-center gap-3">
-                        <span className={`status-badge ${statusConfig.badge}`}>
+                        <motion.span 
+                          className={`status-badge ${statusConfig.badge}`}
+                          whileHover={{ scale: 1.05 }}
+                        >
                           {execution.status}
-                        </span>
+                        </motion.span>
                         <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">
                           {formatDate(execution.startTime)}
                         </span>
@@ -135,14 +149,19 @@ export function RecentExecutions() {
                         )}
                       </div>
                     </div>
-                    <Link
-                      href={`/executions/${execution.id}`}
-                      className="ml-4 p-2 text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-all duration-200 group-hover:scale-110"
+                    <motion.div
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
                     >
-                      <EyeIcon className="h-4 w-4" />
-                    </Link>
+                      <Link
+                        href={`/executions/${execution.id}`}
+                        className="ml-4 p-2 text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-lg transition-all duration-200"
+                      >
+                        <EyeIcon className="h-4 w-4" />
+                      </Link>
+                    </motion.div>
                   </div>
-                </div>
+                </motion.div>
               )
             })}
           </div>

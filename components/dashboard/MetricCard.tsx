@@ -1,4 +1,5 @@
 import { ArrowTrendingUpIcon, ArrowTrendingDownIcon } from '@heroicons/react/24/outline'
+import { motion } from 'framer-motion'
 
 interface MetricCardProps {
   title: string
@@ -86,42 +87,74 @@ export function MetricCard({ title, value, trend, color, pulse }: MetricCardProp
   const isPositive = trend?.startsWith('+')
 
   return (
-    <div className={`bg-gradient-to-br ${config.bg} rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border ${config.border} ${config.hoverBorder} hover:scale-[1.02] group`}>
-      <div className="flex items-center justify-between mb-4">
-        <span className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide">
-          {title}
-        </span>
-        {pulse && (
-          <div className="relative">
-            <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse" />
-            <div className="absolute inset-0 h-3 w-3 bg-green-500 rounded-full animate-ping opacity-75" />
-          </div>
-        )}
-      </div>
+    <motion.div 
+      className={`bg-gradient-to-br ${config.bg} rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 border ${config.border} ${config.hoverBorder} hover:scale-[1.02] hover:-translate-y-1 group relative overflow-hidden`}
+      whileHover={{ 
+        scale: 1.02,
+        y: -4,
+        transition: { duration: 0.2 }
+      }}
+      whileTap={{ scale: 0.98 }}
+    >
+      {/* Background decorative elements */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${config.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+      <div className={`absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br ${config.gradient} opacity-10 rounded-full blur-xl group-hover:opacity-20 transition-opacity duration-500`} />
       
-      <div className="flex items-end justify-between">
-        <div className={`text-4xl font-bold bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-200`}>
-          {value}
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-4">
+          <motion.span 
+            className="text-sm font-semibold text-gray-700 dark:text-gray-300 uppercase tracking-wide"
+            initial={{ opacity: 0.7 }}
+            whileHover={{ opacity: 1 }}
+          >
+            {title}
+          </motion.span>
+          {pulse && (
+            <motion.div 
+              className="relative"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              <div className="h-3 w-3 bg-green-500 rounded-full animate-pulse" />
+              <div className="absolute inset-0 h-3 w-3 bg-green-500 rounded-full animate-ping opacity-75" />
+            </motion.div>
+          )}
         </div>
         
-        {trend && (
-          <div className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${
-            isPositive 
-              ? 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 dark:from-emerald-900/30 dark:to-green-900/30 dark:text-emerald-300' 
-              : 'bg-gradient-to-r from-red-100 to-rose-100 text-red-700 dark:from-red-900/30 dark:to-rose-900/30 dark:text-red-300'
-          }`}>
-            {isPositive ? (
-              <ArrowTrendingUpIcon className="h-4 w-4" />
-            ) : (
-              <ArrowTrendingDownIcon className="h-4 w-4" />
-            )}
-            {trend}
-          </div>
-        )}
+        <div className="flex items-end justify-between">
+          <motion.div 
+            className={`text-4xl font-bold bg-gradient-to-r ${config.gradient} bg-clip-text text-transparent`}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+          >
+            {value}
+          </motion.div>
+          
+          {trend && (
+            <motion.div 
+              className={`flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${
+                isPositive 
+                  ? 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-700 dark:from-emerald-900/30 dark:to-green-900/30 dark:text-emerald-300' 
+                  : 'bg-gradient-to-r from-red-100 to-rose-100 text-red-700 dark:from-red-900/30 dark:to-rose-900/30 dark:text-red-300'
+              }`}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.div
+                animate={{ y: isPositive ? [0, -2, 0] : [0, 2, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                {isPositive ? (
+                  <ArrowTrendingUpIcon className="h-4 w-4" />
+                ) : (
+                  <ArrowTrendingDownIcon className="h-4 w-4" />
+                )}
+              </motion.div>
+              {trend}
+            </motion.div>
+          )}
+        </div>
       </div>
-      
-      {/* Decorative element */}
-      <div className={`absolute top-4 right-4 w-16 h-16 bg-gradient-to-br ${config.gradient} opacity-5 rounded-full blur-xl group-hover:opacity-10 transition-opacity duration-300`} />
-    </div>
+    </motion.div>
   )
 }

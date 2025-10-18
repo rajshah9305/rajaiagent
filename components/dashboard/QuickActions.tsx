@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { 
   PlusIcon, 
   PlayIcon, 
@@ -12,7 +13,7 @@ export function QuickActions() {
   const actions = [
     {
       title: 'Create Agent',
-      description: 'Build a new AI agent',
+      description: 'Build a new AI agent with custom capabilities',
       href: '/agents/new',
       icon: PlusIcon,
       gradient: 'from-indigo-500 to-purple-600',
@@ -24,7 +25,7 @@ export function QuickActions() {
     },
     {
       title: 'View Analytics',
-      description: 'Check performance metrics',
+      description: 'Check detailed performance metrics and insights',
       href: '/analytics',
       icon: ChartBarIcon,
       gradient: 'from-emerald-500 to-green-600',
@@ -36,7 +37,7 @@ export function QuickActions() {
     },
     {
       title: 'Settings',
-      description: 'Configure your preferences',
+      description: 'Configure your workspace and preferences',
       href: '/settings',
       icon: Cog6ToothIcon,
       gradient: 'from-purple-500 to-pink-600',
@@ -57,39 +58,46 @@ export function QuickActions() {
       
       <div className="relative z-10">
         <div className="flex items-center gap-3 mb-6">
-          <div className="icon-container icon-indigo">
-            <PlayIcon className="h-6 w-6" />
-          </div>
-          <h2 className="text-xl font-bold text-gradient">Quick Actions</h2>
+          <div className="w-1 h-6 bg-gradient-to-b from-primary to-primary/70 rounded-full"></div>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white">Quick Actions</h2>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {actions.map((action) => (
-            <Link
+          {actions.map((action, index) => (
+            <motion.div
               key={action.title}
-              href={action.href}
-              className={`group relative bg-gradient-to-br ${action.bg} rounded-2xl p-6 border ${action.border} ${action.hoverBorder} hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
             >
+              <Link
+                href={action.href}
+                className={`group relative bg-gradient-to-br ${action.bg} rounded-2xl p-6 border ${action.border} ${action.hoverBorder} hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden`}
+              >
               {/* Action background gradient */}
               <div className={`absolute inset-0 bg-gradient-to-br ${action.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
               
               <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-3">
-                  <div className={`icon-container ${action.iconBg} group-hover:scale-110 transition-transform duration-200`}>
-                    <action.icon className="h-6 w-6" />
+                <div className="flex flex-col items-center text-center">
+                  <div className={`w-16 h-16 rounded-xl flex items-center justify-center mb-4 ${action.iconBg} group-hover:scale-110 transition-transform duration-200 shadow-lg`}>
+                    <action.icon className="h-8 w-8" />
                   </div>
-                  <h3 className={`font-bold text-gray-900 dark:text-white group-hover:${action.textColor} transition-colors duration-200`}>
+                  <h3 className={`font-bold text-gray-900 dark:text-white group-hover:${action.textColor} transition-colors duration-200 mb-2`}>
                     {action.title}
                   </h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed mb-4">
+                    {action.description}
+                  </p>
+                  <div className={`text-sm font-medium ${action.textColor} flex items-center gap-1 group-hover:gap-2 transition-all duration-200`}>
+                    Get Started →
+                  </div>
                 </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {action.description}
-                </p>
               </div>
 
               {/* Decorative element */}
               <div className={`absolute -top-2 -right-2 w-12 h-12 bg-gradient-to-br ${action.gradient} opacity-10 rounded-full blur-lg group-hover:opacity-20 transition-opacity duration-300`} />
             </Link>
+            </motion.div>
           ))}
         </div>
       </div>
