@@ -83,28 +83,33 @@ export function AgentCard({ agent, onUpdate }: AgentCardProps) {
   const statusConfig = getStatusConfig(agent.agentStatus)
 
   return (
-    <div className="agent-card group relative overflow-hidden">
+    <div className="bg-gradient-to-br from-white via-white to-gray-50 border-2 border-black rounded-xl p-6 hover:shadow-2xl transition-all hover:scale-105 relative overflow-hidden group">
       {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-purple-50/20 to-pink-50/30 dark:from-indigo-900/10 dark:via-purple-900/5 dark:to-pink-900/10 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/20 via-teal-50/10 to-cyan-50/20 opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
       
       <div className="relative z-10">
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className={`icon-container ${statusConfig.icon} group-hover:scale-110 transition-transform duration-200`}>
-              <SparklesIcon className="h-6 w-6" />
+            <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform duration-200">
+              <SparklesIcon className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h3 className="font-bold text-gray-900 dark:text-white text-lg group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-200">
+              <h3 className="font-bold text-black text-lg group-hover:text-emerald-600 transition-colors duration-200">
                 {agent.agentName}
               </h3>
-              <span className={`status-badge ${statusConfig.badge} mt-2`}>
+              <span className={`px-2 py-1 text-xs font-bold rounded-md border mt-2 ${
+                agent.agentStatus === 'PREPARED' ? 'text-emerald-700 bg-emerald-50 border-emerald-200' :
+                agent.agentStatus === 'CREATING' ? 'text-amber-700 bg-amber-50 border-amber-200' :
+                agent.agentStatus === 'FAILED' ? 'text-red-700 bg-red-50 border-red-200' :
+                'text-gray-700 bg-gray-50 border-gray-200'
+              }`}>
                 {agent.agentStatus}
               </span>
             </div>
           </div>
           <button 
             onClick={toggleFavorite} 
-            className="opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 rounded-lg hover:bg-yellow-100 dark:hover:bg-yellow-900/20"
+            className="opacity-0 group-hover:opacity-100 transition-all duration-200 p-2 rounded-lg hover:bg-yellow-100 border border-transparent hover:border-yellow-200"
           >
             {agent.isFavorite ? (
               <StarSolidIcon className="h-5 w-5 text-yellow-500 drop-shadow-sm" />
@@ -114,20 +119,20 @@ export function AgentCard({ agent, onUpdate }: AgentCardProps) {
           </button>
         </div>
 
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2 leading-relaxed">
+        <p className="text-sm text-gray-600 mb-4 line-clamp-2 leading-relaxed">
           {agent.description || 'No description provided'}
         </p>
 
         <div className="grid grid-cols-2 gap-3 mb-6 text-xs">
-          <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-3 border border-gray-100/50 dark:border-gray-700/30">
-            <div className="text-gray-500 dark:text-gray-400 mb-1">Model</div>
-            <div className="font-semibold text-gray-900 dark:text-white truncate">
+          <div className="bg-white/80 rounded-lg p-3 border-2 border-gray-200">
+            <div className="text-gray-500 mb-1 font-semibold">Model</div>
+            <div className="font-bold text-black truncate">
               {agent.foundationModel}
             </div>
           </div>
-          <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-3 border border-gray-100/50 dark:border-gray-700/30">
-            <div className="text-gray-500 dark:text-gray-400 mb-1">Executions</div>
-            <div className="font-semibold text-gray-900 dark:text-white">
+          <div className="bg-white/80 rounded-lg p-3 border-2 border-gray-200">
+            <div className="text-gray-500 mb-1 font-semibold">Executions</div>
+            <div className="font-bold text-black">
               {agent.executionCount || 0}
             </div>
           </div>
@@ -136,20 +141,20 @@ export function AgentCard({ agent, onUpdate }: AgentCardProps) {
         <div className="flex items-center gap-2">
           <Link
             href={`/agents/${agent.id}/execute`}
-            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl font-medium group-hover:scale-105 transform"
+            className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl hover:from-emerald-700 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl font-medium group-hover:scale-105 transform border-2 border-black"
           >
             <PlayIcon className="h-4 w-4" />
             Execute
           </Link>
           <Link
             href={`/agents/${agent.id}`}
-            className="p-3 text-gray-600 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-xl transition-all duration-200"
+            className="p-3 text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all duration-200 border border-transparent hover:border-emerald-200"
           >
             <PencilIcon className="h-4 w-4" />
           </Link>
           <button
             onClick={handleDelete}
-            className="p-3 text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-all duration-200"
+            className="p-3 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all duration-200 border border-transparent hover:border-red-200"
           >
             <TrashIcon className="h-4 w-4" />
           </button>
@@ -157,8 +162,8 @@ export function AgentCard({ agent, onUpdate }: AgentCardProps) {
       </div>
 
       {/* Decorative elements */}
-      <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-xl group-hover:scale-110 transition-transform duration-300" />
-      <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-xl group-hover:scale-110 transition-transform duration-300" />
+      <div className="absolute -top-4 -right-4 w-20 h-20 bg-gradient-to-br from-emerald-400/10 to-teal-400/10 rounded-full blur-xl group-hover:scale-110 transition-transform duration-300" />
+      <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-br from-teal-400/10 to-cyan-400/10 rounded-full blur-xl group-hover:scale-110 transition-transform duration-300" />
     </div>
   )
 }

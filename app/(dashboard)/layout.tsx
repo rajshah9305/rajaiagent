@@ -114,26 +114,33 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-rose-50 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-emerald-200/20 to-teal-200/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-cyan-200/20 to-sky-200/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}}></div>
+      </div>
+      
       {/* Sidebar */}
       <motion.aside
         initial={false}
         animate={{ width: sidebarOpen ? 280 : 80 }}
-        className="fixed left-0 top-0 h-screen bg-card border-r border-border z-40 transition-all duration-300 mobile-safe-area"
+        className="fixed left-0 top-0 h-screen bg-gradient-to-br from-white via-white to-gray-50 border-r-2 border-black z-40 transition-all duration-300 mobile-safe-area shadow-2xl"
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
-          <div className="h-16 flex items-center justify-between px-6 border-b border-border">
+          <div className="h-16 flex items-center justify-between px-6 border-b-2 border-black">
             <motion.div 
               className="flex items-center gap-3"
               animate={{ opacity: sidebarOpen ? 1 : 0 }}
             >
               <motion.div 
-                className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg"
+                className="w-11 h-11 rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/30"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Sparkles className="w-5 h-5 text-white" />
+                <Bot className="w-6 h-6 text-white" />
               </motion.div>
               {sidebarOpen && (
                 <motion.div
@@ -142,14 +149,14 @@ export default function DashboardLayout({
                   exit={{ opacity: 0, x: -10 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <h1 className="text-lg font-bold text-gradient">RAJ AI</h1>
-                  <p className="text-xs text-muted-foreground">Agent Builder</p>
+                  <h1 className="text-xl font-bold text-black tracking-tight">RAJ AI</h1>
+                  <p className="text-xs text-gray-600 font-medium">Agent Builder</p>
                 </motion.div>
               )}
             </motion.div>
             <motion.button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-2 rounded-lg hover:bg-secondary transition-colors"
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -175,17 +182,17 @@ export default function DashboardLayout({
                   <Link
                     href={item.path}
                     className={`
-                      w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 relative overflow-hidden
+                      w-full flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-300 relative overflow-hidden border-2
                       ${isActive 
-                        ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20' 
-                        : 'text-foreground hover:bg-secondary/80'
+                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg shadow-emerald-500/30 border-emerald-500' 
+                        : 'text-black hover:bg-gray-100 border-transparent hover:border-gray-200'
                       }
                     `}
                   >
                     {/* Active indicator */}
                     {isActive && (
                       <motion.div
-                        className="absolute left-0 top-0 bottom-0 w-1 bg-primary-foreground rounded-r-full"
+                        className="absolute left-0 top-0 bottom-0 w-1 bg-white rounded-r-full"
                         layoutId="activeIndicator"
                         transition={{ duration: 0.2 }}
                       />
@@ -225,14 +232,14 @@ export default function DashboardLayout({
           </nav>
 
           {/* User Profile */}
-          <div className="p-3 border-t border-border">
+          <div className="p-3 border-t-2 border-black">
             <motion.div
-              className="flex items-center gap-3 p-3 rounded-xl hover:bg-secondary cursor-pointer transition-colors"
+              className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-100 cursor-pointer transition-colors border-2 border-transparent hover:border-gray-200"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               <motion.div 
-                className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-semibold text-sm shadow-lg"
+                className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-semibold text-sm shadow-lg shadow-amber-500/30"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ duration: 0.2 }}
               >
@@ -245,8 +252,8 @@ export default function DashboardLayout({
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 }}
                 >
-                  <p className="text-sm font-medium truncate">Raj Shah</p>
-                  <p className="text-xs text-muted-foreground truncate">raj@example.com</p>
+                  <p className="text-sm font-medium truncate text-black">Raj Shah</p>
+                  <p className="text-xs text-gray-600 truncate">raj@example.com</p>
                 </motion.div>
               )}
             </motion.div>
@@ -260,7 +267,7 @@ export default function DashboardLayout({
         style={{ marginLeft: sidebarOpen ? 280 : 80 }}
       >
         {/* Top Bar */}
-        <header className="h-16 bg-card/95 backdrop-blur-xl border-b border-border sticky top-0 z-30">
+        <header className="h-16 bg-white/90 backdrop-blur-xl border-b-2 border-black sticky top-0 z-30 shadow-lg">
           <div className="h-full px-6 flex items-center justify-between">
             {/* Enhanced Search */}
             <div className="flex-1 max-w-md">
@@ -275,14 +282,14 @@ export default function DashboardLayout({
               {/* Theme Toggle */}
               <motion.button
                 onClick={toggleTheme}
-                className="p-2.5 rounded-xl hover:bg-secondary transition-colors"
+                className="p-2.5 rounded-xl hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
                 {theme === 'light' ? (
-                  <Moon className="w-5 h-5" />
+                  <Moon className="w-5 h-5 text-gray-700" />
                 ) : (
-                  <Sun className="w-5 h-5" />
+                  <Sun className="w-5 h-5 text-gray-700" />
                 )}
               </motion.button>
 
@@ -295,11 +302,11 @@ export default function DashboardLayout({
 
               {/* User Menu */}
               <motion.button
-                className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-secondary transition-colors"
+                className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors border border-transparent hover:border-gray-200"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-semibold text-sm">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white font-semibold text-sm shadow-lg shadow-amber-500/30">
                   RS
                 </div>
               </motion.button>

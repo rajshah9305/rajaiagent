@@ -2,6 +2,19 @@ import { renderHook, act } from '@testing-library/react'
 import { useExecution } from '@/hooks/useExecution'
 import { Execution } from '@/types'
 
+// Mock TextEncoder and TextDecoder for Node.js environment
+global.TextEncoder = class TextEncoder {
+  encode(input: string): Uint8Array {
+    return new Uint8Array(Buffer.from(input, 'utf8'))
+  }
+}
+
+global.TextDecoder = class TextDecoder {
+  decode(input: Uint8Array): string {
+    return Buffer.from(input).toString('utf8')
+  }
+}
+
 // Mock fetch
 global.fetch = jest.fn()
 

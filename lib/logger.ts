@@ -5,7 +5,7 @@ export enum LogLevel {
   ERROR = 3,
 }
 
-class Logger {
+export class Logger {
   private level: LogLevel
 
   constructor(level: LogLevel = LogLevel.INFO) {

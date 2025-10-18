@@ -3,7 +3,7 @@ export interface Agent {
   agentId: string
   agentArn: string
   agentName: string
-  description: string
+  description: string | null
   instructions: string
   foundationModel: string
   idleSessionTTL: number
@@ -21,25 +21,27 @@ export interface Execution {
   agentId: string
   sessionId: string
   input: string
-  status: 'RUNNING' | 'COMPLETE' | 'FAILED' | 'CANCELLED'
+  status: string
   startTime: string
-  endTime?: string
-  duration?: number
-  output?: string
+  endTime?: string | null
+  duration?: number | null
+  output?: string | null
   tasks: Task[]
-  metrics?: ExecutionMetrics
+  metrics?: ExecutionMetrics | null
+  agent?: Agent
 }
 
 export interface Task {
   id: string
+  executionId: string
   taskName: string
-  status: 'PENDING' | 'RUNNING' | 'COMPLETE' | 'ERROR'
+  status: string
   startTime: string
-  endTime?: string
-  duration?: number
+  endTime?: string | null
+  duration?: number | null
   progress: number
-  output?: string
-  error?: string
+  output?: string | null
+  error?: string | null
 }
 
 export interface ExecutionMetrics {

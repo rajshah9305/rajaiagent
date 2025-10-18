@@ -4,14 +4,7 @@ import { Agent, Execution } from '@/types'
 describe('LocalStore', () => {
   beforeEach(() => {
     // Clear the store before each test
-    const agents = store.getAgents()
-    agents.forEach(agent => store.deleteAgent(agent.id))
-    
-    const executions = store.getExecutions()
-    executions.forEach(execution => {
-      // We need to access the private executions map to clear it
-      // Since we can't access private members, we'll work with what we have
-    })
+    store.clear()
   })
 
   describe('Agent operations', () => {

@@ -1,21 +1,15 @@
 import { NextResponse } from 'next/server'
-import { store } from '@/lib/db/store'
+import { db } from '@/lib/db/database'
 
 export async function GET() {
-  const agents = store.getAgents()
-  const executions = store.getExecutions()
-  
-  const successfulExecutions = executions.filter(e => e.status === 'COMPLETE')
-  const activeExecutions = executions.filter(e => e.status === 'RUNNING')
-  
-  const metrics = {
-    totalAgents: agents.length,
-    totalExecutions: executions.length,
-    successRate: executions.length > 0 
-      ? Math.round((successfulExecutions.length / executions.length) * 100)
-      : 0,
-    activeExecutions: activeExecutions.length,
+  try {
+    const metrics = await db.getDashboardMetrics()
+    return NextResponse.json(metrics)
+  } catch (error) {
+    console.error('Failed to fetch metrics:', error)
+    return NextResponse.json(
+      { error: 'Failed to fetch metrics' },
+      { status: 500 }
+    )
   }
-  
-  return NextResponse.json(metrics)
 }

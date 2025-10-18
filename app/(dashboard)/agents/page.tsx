@@ -42,34 +42,24 @@ export default function AgentsPage() {
   }
 
   return (
-    <div className="p-6 lg:p-8 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/20 via-purple-50/10 to-pink-50/20 dark:from-indigo-900/10 dark:via-purple-900/5 dark:to-pink-900/10" />
-      <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-indigo-400/10 to-purple-400/10 rounded-full blur-xl" />
-      <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-gradient-to-br from-purple-400/10 to-pink-400/10 rounded-full blur-xl" />
-      
-      <div className="relative z-10">
-        <div className="mb-8 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="icon-container icon-indigo">
-              <SparklesIcon className="h-8 w-8" />
-            </div>
-            <div>
-              <h1 className="text-4xl font-bold text-gradient">AI Agents</h1>
-              <p className="mt-2 text-gray-600 dark:text-gray-400 text-lg">
-                Manage your AWS Bedrock agents
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/agents/new"
-            className="inline-flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105 transform font-semibold"
-          >
-            <PlusIcon className="h-5 w-5" />
-            Create Agent
-          </Link>
+    <div className="space-y-8">
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">AI Agents</h1>
+          <p className="text-gray-600 mt-1">Manage your AWS Bedrock agents</p>
         </div>
+        <Link
+          href="/agents/new"
+          className="px-6 py-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold rounded-lg hover:from-emerald-700 hover:to-teal-700 transition-all flex items-center space-x-2 shadow-lg shadow-emerald-500/30"
+        >
+          <PlusIcon className="h-5 w-5" />
+          <span>Create Agent</span>
+        </Link>
+      </div>
 
+      <div className="space-y-8">
+        {/* Search Bar */}
         <div className="mb-8">
           <div className="relative max-w-md">
             <MagnifyingGlassIcon className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -77,7 +67,7 @@ export default function AgentsPage() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200/50 dark:border-gray-600/50 bg-white/60 dark:bg-gray-800/60 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 shadow-sm hover:shadow-md focus:shadow-lg"
+              className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white transition-all shadow-sm hover:shadow-md focus:shadow-lg"
               placeholder="Search agents..."
             />
           </div>

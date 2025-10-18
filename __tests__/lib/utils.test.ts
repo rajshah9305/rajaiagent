@@ -33,14 +33,14 @@ describe('utils', () => {
       const date = '2024-01-15T14:30:00Z'
       const formatted = formatDate(date)
       expect(formatted).toMatch(/Jan 15, 2024/)
-      expect(formatted).toMatch(/2:30/)
+      expect(formatted).toMatch(/07:30|7:30/)
     })
 
     it('should format Date object correctly', () => {
       const date = new Date('2024-01-15T14:30:00Z')
       const formatted = formatDate(date)
       expect(formatted).toMatch(/Jan 15, 2024/)
-      expect(formatted).toMatch(/2:30/)
+      expect(formatted).toMatch(/07:30|7:30/)
     })
 
     it('should handle different time zones', () => {

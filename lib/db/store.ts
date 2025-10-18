@@ -37,6 +37,15 @@ class LocalStore {
   getExecutionsByAgent(agentId: string): Execution[] {
     return Array.from(this.executions.values()).filter(e => e.agentId === agentId)
   }
+
+  deleteExecution(id: string): void {
+    this.executions.delete(id)
+  }
+
+  clear(): void {
+    this.agents.clear()
+    this.executions.clear()
+  }
 }
 
 export const store = new LocalStore()

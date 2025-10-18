@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Agent {
+  id                String   @id @default(cuid())
+  agentId           String   @unique // AWS Bedrock agent ID
+  agentArn          String   @unique // AWS Bedrock agent ARN
+  agentName         String
+  description       String?
+  instructions      String
+  foundationModel   String
+  idleSessionTTL    Int      @default(600)
+  agentStatus       String   @default("PREPARED")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  tags              String   @default("[]") // JSON string array
+  isFavorite        Boolean  @default(false)
+  executionCount    Int      @default(0)
+  lastExecutionTime DateTime?
+
+  // Relations
+  executions        Execution[]
+
+  @@map("agents")
+}
+
+model Execution {
+  id          String   @id @default(cuid())
+  agentId     String
+  sessionId   String
+  input       String
+  status      String   // RUNNING, COMPLETE, FAILED, CANCELLED
+  startTime   DateTime @default(now())
+  endTime     DateTime?
+  duration    Int?     // in milliseconds
+  output      String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  tasks       Task[]
+  metrics     ExecutionMetrics?
+
+  @@map("executions")
+}
+
+model Task {
+  id          String   @id @default(cuid())
+  executionId String
+  taskName    String
+  status      String   // PENDING, RUNNING, COMPLETE, ERROR
+  startTime   DateTime @default(now())
+  endTime     DateTime?
+  duration    Int?     // in milliseconds
+  progress    Int      @default(0) // 0-100
+  output      String?
+  error       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  execution   Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
+}
+
+model ExecutionMetrics {
+  id                    String   @id @default(cuid())
+  executionId           String   @unique
+  totalTasks            Int      @default(0)
+  completedTasks        Int      @default(0)
+  failedTasks           Int      @default(0)
+  runningTasks          Int      @default(0)
+  averageTaskDuration   Float    @default(0)
+  totalDuration         Int      @default(0)
+  throughput            Float    @default(0)
+  successRate           Float    @default(0)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  // Relations
+  execution             Execution @relation(fields: [executionId], references: [id], onDelete: Cascade)
+
+  @@map("execution_metrics")
+}

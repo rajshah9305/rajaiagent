@@ -176,7 +176,7 @@ describe('Logger', () => {
       
       // Test development environment
       process.env.NODE_ENV = 'development'
-      const devLogger = new Logger()
+      const devLogger = new Logger(LogLevel.DEBUG)
       devLogger.debug('Debug message')
       expect(mockConsoleLog).toHaveBeenCalled()
 
@@ -184,7 +184,7 @@ describe('Logger', () => {
 
       // Test production environment
       process.env.NODE_ENV = 'production'
-      const prodLogger = new Logger()
+      const prodLogger = new Logger(LogLevel.INFO)
       prodLogger.debug('Debug message')
       expect(mockConsoleLog).not.toHaveBeenCalled()
 

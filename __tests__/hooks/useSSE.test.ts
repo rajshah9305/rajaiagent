@@ -57,7 +57,13 @@ describe('useSSE', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+    // Create a fresh mock EventSource for each test
     mockEventSource = new MockEventSource('http://test.com/sse')
+    // Mock the global EventSource constructor
+    ;(global as any).EventSource = jest.fn().mockImplementation((url: string) => {
+      mockEventSource = new MockEventSource(url)
+      return mockEventSource
+    })
   })
 
   it('should establish SSE connection', () => {
